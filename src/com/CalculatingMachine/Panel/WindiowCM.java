@@ -1,4 +1,4 @@
-package com.CalculatingMachine;
+package com.CalculatingMachine.Panel;
 
 import javax.swing.JFrame;
 

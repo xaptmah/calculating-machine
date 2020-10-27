@@ -1,5 +1,7 @@
 package com.CalculatingMachine;
 
+import com.CalculatingMachine.Panel.WindiowCM;
+
 import javax.swing.SwingUtilities;
 
 public class Main {

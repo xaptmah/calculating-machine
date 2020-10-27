@@ -4,7 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class Buttons extends JPanel {
-
+   // private JButton numbers = new JButton();
     public Buttons(){
         setLayout(null);
 

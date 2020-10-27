@@ -11,6 +11,7 @@ public class WindiowCM {
         window.setLocationRelativeTo(null);
         window.setResizable(false);
         window.add(new Buttons());
+        window.add(new OutPanel());
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }

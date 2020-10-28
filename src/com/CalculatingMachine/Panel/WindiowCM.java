@@ -7,7 +7,7 @@ public class WindiowCM {
     private JFrame window = new JFrame("Calculating Machine");
     public WindiowCM(){
 
-        window.setSize(280,340);
+        window.setSize(240,340);
         window.setLocationRelativeTo(null);
         window.setResizable(false);
         window.add(new Buttons());

@@ -4,12 +4,14 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class Buttons extends JPanel {
-   // private JButton numbers = new JButton();
-    public Buttons(){
-        setLayout(null);
 
+    public Buttons(){
         JButton b1 = new JButton("123");
         b1.setBounds(100,100,55,50);
         add(b1);
     }
+
+
+
+
 }

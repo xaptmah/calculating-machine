@@ -25,7 +25,7 @@ public class WindiowCM {
         jPanel.add(output, getLocationTextField(7,20));
 
         int number = 10;
-        for(int i = 1; i < 4; i++){
+        for(int i = 2; i < 5; i++){
             for(int y = 4; y > 1; y--){
                 number--;
                 jPanel.add(new Button((number) + ""), getLocationButtonDigit(y,i));
@@ -33,8 +33,15 @@ public class WindiowCM {
         }
 
 
-        jPanel.add(new Button( "+"), getLocationVerticalButton(5,1,2));
-        jPanel.add(new Button( "-"), getLocationVerticalButton(5,3,2));
+        jPanel.add(new Button( "="), getLocationVerticalButton(5,2,2));
+        jPanel.add(new Button( "-"), getLocationButtonDigit(5,4));
+        jPanel.add(new Button( "0"), getLocationHorizontalButton(2,5,2));
+        jPanel.add(new Button( "+"), getLocationButtonDigit(5,5));
+        jPanel.add(new Button( " , "), getLocationButtonDigit(4,5));
+        jPanel.add(new Button( "C"), getLocationButtonDigit(2,1));
+        jPanel.add(new Button( "/"), getLocationButtonDigit(3,1));
+        jPanel.add(new Button( "*"), getLocationButtonDigit(4,1));
+        jPanel.add(new Button( "±"), getLocationButtonDigit(5,1));
 
 
     }
@@ -54,6 +61,8 @@ public class WindiowCM {
         result.gridy = gy;
         result.ipady = 20;
         result.ipadx = 20;
+        result.gridwidth = 1;
+        result.fill = GridBagConstraints.HORIZONTAL;
         //result.anchor = GridBagConstraints.LINE_START;
         return result;
     }
@@ -66,7 +75,19 @@ public class WindiowCM {
         result.ipadx = 20;
         result.gridheight = gr;
         //result.ipady = ipy;
-        result.fill = GridBagConstraints.VERTICAL;
+        result.fill = GridBagConstraints.BOTH;
+
+        return result;
+    }
+    private GridBagConstraints getLocationHorizontalButton(int gx, int gy, int gr/*, int ipy*/){
+        GridBagConstraints result = new GridBagConstraints();
+        result.gridx = gx;
+        result.gridy = gy;
+        result.ipady = 20;
+        result.ipadx = 20;
+        result.gridwidth = gr;
+        //result.ipady = ipy;
+        result.fill = GridBagConstraints.HORIZONTAL;
         return result;
     }
 

@@ -3,7 +3,6 @@ package com.CalculatingMachine.Panel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -28,6 +27,7 @@ public class WindiowCM {
     private JButton negativePositive = new JButton("±");
 
 
+
     public void addComponentsToWindiow(Container jPanel){
 
 
@@ -37,16 +37,23 @@ public class WindiowCM {
         jPanel.revalidate();
         //output.setEditable(false);
         jPanel.add(output, getLocationTextField(7,20));
+        getButtonListener(jPanel);
 
-         int number = 10;
+
+
+
+    }
+    private  void getButtonListener(Container jPanel){
+        int numberButton = 10;
         for(int i = 2; i < 5; i++){
             for(int y = 4; y > 1; y--){
-                number--;
-                JButton numbers = new JButton((number) + "");
+                numberButton--;
+                JButton numbers = new JButton((numberButton) + "");
                 jPanel.add(numbers, getLocationButtonDigit(y,i));
                 numbers.addActionListener(new BListener());
             }
         }
+
         additionBtn.addActionListener(new BListener());
         jPanel.add(additionBtn);
 
@@ -73,16 +80,13 @@ public class WindiowCM {
 
         jPanel.add(multiply, getLocationButtonDigit(4,1));
         multiply.addActionListener(new BListener());
-
         jPanel.add(negativePositive, getLocationButtonDigit(5,1));
         negativePositive.addActionListener(new BListener());
-
     }
     private class BListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            String s1, s2;
+            String s1;
             s1 = ((JButton)e.getSource()).getText();
-
             output.setText(output.getText() + s1);
         }
     }

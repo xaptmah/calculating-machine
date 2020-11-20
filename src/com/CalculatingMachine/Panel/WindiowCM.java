@@ -14,17 +14,9 @@ import java.awt.event.ActionListener;
 public class WindiowCM {
 
 
-    private JTextField output = new JTextField();
-    private JButton additionBtn = new JButton("хуйнаны");
-    private JButton calculate = new JButton( "=");
-    private JButton subtract = new JButton("-");
-    private JButton zero = new JButton("0");
-    private JButton sum = new JButton("+");
-    private JButton comma = new JButton(",");
-    private JButton clean = new JButton("C");
-    private JButton divide = new JButton("/");
-    private JButton multiply = new JButton("*");
-    private JButton negativePositive = new JButton("±");
+    private final JTextField output = new JTextField();
+    private final JTextField output2 = new JTextField();
+
 
 
 
@@ -35,8 +27,9 @@ public class WindiowCM {
         GridBagLayout gridBagLayout = new GridBagLayout();
         jPanel.setLayout(gridBagLayout);
         jPanel.revalidate();
-        //output.setEditable(false);
-        jPanel.add(output, getLocationTextField(7,20));
+        output2.setEditable(false);
+        jPanel.add(output, getLocationTextField(7,20,1));
+        jPanel.add(output2, getLocationTextField(7,20,0));
         getButtonListener(jPanel);
 
 
@@ -45,7 +38,7 @@ public class WindiowCM {
     }
     private  void getButtonListener(Container jPanel){
         int numberButton = 10;
-        for(int i = 2; i < 5; i++){
+        for(int i = 3; i < 6; i++){
             for(int y = 4; y > 1; y--){
                 numberButton--;
                 JButton numbers = new JButton((numberButton) + "");
@@ -53,45 +46,96 @@ public class WindiowCM {
                 numbers.addActionListener(new BListener());
             }
         }
-
+        JButton additionBtn = new JButton("хуйнаны");
         additionBtn.addActionListener(new BListener());
         jPanel.add(additionBtn);
 
-        jPanel.add(calculate , getLocationVerticalButton(5,2,2));
+        JButton calculate = new JButton( "=");
+        jPanel.add(calculate , getLocationVerticalButton(5,3,2));
         calculate.addActionListener(new BListener());
 
-        jPanel.add(subtract, getLocationButtonDigit(5,4));
+        JButton subtract = new JButton("-");
+        jPanel.add(subtract, getLocationButtonDigit(5,5));
         subtract.addActionListener(new BListener());
 
-        jPanel.add(zero, getLocationHorizontalButton(2,5,2));
+        JButton zero = new JButton("0");
+        jPanel.add(zero, getLocationHorizontalButton(2,6,2));
         zero.addActionListener(new BListener());
 
-        jPanel.add(sum, getLocationButtonDigit(5,5));
+        JButton sum = new JButton("+");
+        jPanel.add(sum, getLocationButtonDigit(5,6));
         sum.addActionListener(new BListener());
 
-        jPanel.add(comma, getLocationButtonDigit(4,5));
-        comma.addActionListener(new BListener());
+        JButton dot = new JButton(".");
+        jPanel.add(dot, getLocationButtonDigit(4,6));
+        dot.addActionListener(new BListener());
 
-        jPanel.add(clean, getLocationButtonDigit(2,1));
+        JButton clean = new JButton("C");
+        jPanel.add(clean, getLocationButtonDigit(2,2));
         clean.addActionListener(new BListener());
 
-        jPanel.add(divide, getLocationButtonDigit(3,1));
+        JButton divide = new JButton("/");
+        jPanel.add(divide, getLocationButtonDigit(3,2));
         divide.addActionListener(new BListener());
 
-        jPanel.add(multiply, getLocationButtonDigit(4,1));
+        JButton multiply = new JButton("*");
+        jPanel.add(multiply, getLocationButtonDigit(4,2));
         multiply.addActionListener(new BListener());
-        jPanel.add(negativePositive, getLocationButtonDigit(5,1));
+
+        JButton negativePositive = new JButton("±");
+        jPanel.add(negativePositive, getLocationButtonDigit(5,2));
         negativePositive.addActionListener(new BListener());
     }
+
     private class BListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String s1;
             s1 = ((JButton)e.getSource()).getText();
-            output.setText(output.getText() + s1);
+
+
+            //
+            switch (s1){
+                case "0": case "1": case "2": case "3": case "4":
+                case "5": case "6": case "7": case "8": case "9":
+                case ".":
+                    output.setText((output.getText() + s1)  );
+                    break;
+                case "+":
+                    output2.setText(output2.getText() +output.getText() + s1);
+                    output.setText("FUCK");
+                    break;
+                case "-":
+                    output2.setText(output2.getText() +output.getText() + s1);
+                    output.setText("FUCK");
+                    break;
+                case "=":
+                    output.setText("FUCK");
+                    break;
+                case "*":
+                    output2.setText(output2.getText() +output.getText() + s1);
+                    output.setText("FUCK");
+                    break;
+                case "/":
+                    output2.setText(output2.getText() +output.getText() + s1);
+                    output.setText("FUCK");
+                    break;
+                case "C":
+                    output2.setText("");
+                    output.setText("");
+                    break;
+                case "±":
+                    output2.setText("");
+                    output.setText(output.getText() +"-");
+                    break;
+
+
+            }
+
         }
     }
-    private GridBagConstraints getLocationTextField(int gr, int ipy){
+    private GridBagConstraints getLocationTextField(int gr, int ipy,int gy){
         GridBagConstraints result = new GridBagConstraints();
+        result.gridy = gy;
         result.gridwidth = gr;
         result.ipady = ipy;
         result.fill = GridBagConstraints.HORIZONTAL;

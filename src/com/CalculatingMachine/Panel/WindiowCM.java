@@ -39,14 +39,8 @@ public class WindiowCM {
                 addButton(jPanel, String.valueOf(--numberButton), y, i, Type.INPUT);
             }
         }
-        JButton calculate = new CalcButton("=", Type.EQUAL);
-        jPanel.add(calculate, getLocationVerticalButton(5, 3, 2));
-        calculate.addActionListener(new CalcListener(output, output2));
-
-        JButton zero = new CalcButton("0", Type.INPUT);
-        jPanel.add(zero, getLocationHorizontalButton(2, 6, 2));
-        zero.addActionListener(new CalcListener(output, output2));
-
+        addButtonVertical(jPanel,"=",5,3,2,Type.EQUAL);
+        addButtonHorizontal(jPanel,"0",2,6,2,Type.INPUT);
         addButton(jPanel, "-", 5, 5, Type.OPERATION);
         addButton(jPanel, "+", 5, 6, Type.OPERATION);
         addButton(jPanel, ".", 4, 6, Type.INPUT);
@@ -59,6 +53,16 @@ public class WindiowCM {
     private void addButton(Container jPanel, String text, int x, int y, Type type) {
         JButton subtract = new CalcButton(text, type);
         jPanel.add(subtract, getLocationButtonDigit(x, y));
+        subtract.addActionListener(new CalcListener(output, output2));
+    }
+    private  void addButtonHorizontal(Container jPanel,String text,int gx, int gy, int gr,Type type){
+        JButton subtract = new CalcButton(text, type);
+        jPanel.add(subtract, getLocationHorizontalButton(gx,gy,gr));
+        subtract.addActionListener(new CalcListener(output, output2));
+    }
+    private  void addButtonVertical(Container jPanel,String text,int gx, int gy, int gr,Type type){
+        JButton subtract = new CalcButton(text, type);
+        jPanel.add(subtract, getLocationVerticalButton(gx,gy,gr));
         subtract.addActionListener(new CalcListener(output, output2));
     }
 
@@ -75,40 +79,33 @@ public class WindiowCM {
 
     private GridBagConstraints getLocationButtonDigit(int gx, int gy) {
         GridBagConstraints result = new GridBagConstraints();
-
-        result.gridx = gx;
-        result.gridy = gy;
-        result.ipady = 20;
-        result.ipadx = 20;
+        getLocationButton(result,gx,gy);
         result.gridwidth = 1;
         result.fill = GridBagConstraints.HORIZONTAL;
         //result.anchor = GridBagConstraints.LINE_START;
         return result;
     }
 
-    private GridBagConstraints getLocationVerticalButton(int gx, int gy, int gr/*, int ipy*/) {
-        GridBagConstraints result = new GridBagConstraints();
-        result.gridx = gx;
-        result.gridy = gy;
-        result.ipady = 20;
-        result.ipadx = 20;
-        result.gridheight = gr;
-        //result.ipady = ipy;
-        result.fill = GridBagConstraints.BOTH;
 
+    private GridBagConstraints getLocationVerticalButton(int gx, int gy, int gr) {
+        GridBagConstraints result = new GridBagConstraints();
+        getLocationButton(result,gx,gy);
+        result.gridheight = gr;
         return result;
     }
 
-    private GridBagConstraints getLocationHorizontalButton(int gx, int gy, int gr/*, int ipy*/) {
+    private GridBagConstraints getLocationHorizontalButton(int gx, int gy, int gr) {
         GridBagConstraints result = new GridBagConstraints();
+        getLocationButton(result,gx,gy);
+        result.gridwidth = gr;
+        return result;
+    }
+    private void getLocationButton(GridBagConstraints result,int gx,int gy){
         result.gridx = gx;
         result.gridy = gy;
         result.ipady = 20;
         result.ipadx = 20;
-        result.gridwidth = gr;
-        //result.ipady = ipy;
-        result.fill = GridBagConstraints.HORIZONTAL;
-        return result;
+        result.fill = GridBagConstraints.BOTH;
     }
 
     public void show() {

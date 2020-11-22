@@ -33,7 +33,9 @@ public class CalcListener implements ActionListener {
                 output.setText("");
                 break;
             case NEGATIVE:
-                if ('-' == output.getText().charAt(0)) {
+                if("".equals(output.getText())){
+                    break;
+                }else if ('-' == output.getText().charAt(0)) {
                     output.setText(output.getText().substring(1));
                 } else {
                     output.setText("-" + output.getText());

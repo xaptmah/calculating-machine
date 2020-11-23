@@ -6,7 +6,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import java.awt.Container;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 
@@ -25,8 +24,8 @@ public class WindiowCM {
         jPanel.setLayout(gridBagLayout);
         jPanel.revalidate();
         output2.setEditable(false);
-        jPanel.add(output, getLocationElement(0, 1, output.getText()));
-        jPanel.add(output2, getLocationElement(0, 0, output.getText()));
+        jPanel.add(output, new GridBag(0, 1, output.getText()));
+        jPanel.add(output2, new GridBag(0, 0, output.getText()));
         getButtonListener(jPanel);
 
     }
@@ -34,8 +33,8 @@ public class WindiowCM {
     private void getButtonListener(Container jPanel) {
         int numberButton = 10;
         for (int i = 3; i < 6; i++) {
-            for (int y = 4; y > 1; y--) {
-                addButton(jPanel, String.valueOf(--numberButton), y, i, Type.INPUT);
+            for (int z = 4; z > 1; z--) {
+                addButton(jPanel, String.valueOf(--numberButton), z, i, Type.INPUT);
             }
         }
 
@@ -54,37 +53,11 @@ public class WindiowCM {
 
     private void addButton(Container jPanel, String text, int x, int y, Type type) {
         JButton subtract = new CalcButton(text, type);
-        jPanel.add(subtract, getLocationElement(x, y, text));
+        GridBag gridBag = new GridBag(x, y, text);
+        jPanel.add(subtract, gridBag);
         subtract.addActionListener(new CalcListener(output, output2));
     }
 
-    private GridBagConstraints getLocationElement(int gx, int gy, String text) {
-        GridBagConstraints result = new GridBagConstraints();
-        getLocationElement(result, gx, gy, text);
-        return result;
-    }
-
-    private void getLocationElement(GridBagConstraints result, int gx, int gy, String text) {
-        result.gridx = gx;
-        result.gridy = gy;
-        result.ipady = 20;
-        result.ipadx = 20;
-        buttonSize(result, text);
-        result.fill = GridBagConstraints.BOTH;
-    }
-
-    private void buttonSize(GridBagConstraints result, String text) {
-        if (text.equals("=")) {
-            result.gridheight = 2;
-        } else if (text.equals("0")) {
-            result.gridwidth = 2;
-        } else if (text.equals("Enter digits")) {
-            result.gridwidth = 7;
-        } else {
-            result.gridwidth = 1;
-        }
-
-    }
 
     public void show() {
         JFrame window = new JFrame("Calculating Machine");

@@ -26,7 +26,8 @@ public class CalcListener implements ActionListener {
                 output.setText("");
                 break;
             case EQUAL:
-                output.setText("FUCK");
+                computation(output2.getText());
+                //output.setText("FUCK");
                 break;
             case CLEAR:
                 output2.setText("");
@@ -40,6 +41,9 @@ public class CalcListener implements ActionListener {
                 }
                 break;
         }
+
+    }
+    private void computation(String task){
 
     }
 }

@@ -13,7 +13,7 @@ import java.awt.GridBagLayout;
 public class WindiowCM {
 
 
-    private final JTextField output = new JTextField();
+    private final JTextField output = new JTextField("Enter digits");
     private final JTextField output2 = new JTextField();
 
 
@@ -25,10 +25,9 @@ public class WindiowCM {
         jPanel.setLayout(gridBagLayout);
         jPanel.revalidate();
         output2.setEditable(false);
-        jPanel.add(output, getLocationTextField(7, 20, 1));
-        jPanel.add(output2, getLocationTextField(7, 20, 0));
+        jPanel.add(output, getLocationElement(0, 1, output.getText()));
+        jPanel.add(output2, getLocationElement(0, 0, output.getText()));
         getButtonListener(jPanel);
-
 
     }
 
@@ -39,38 +38,39 @@ public class WindiowCM {
                 addButton(jPanel, String.valueOf(--numberButton), y, i, Type.INPUT);
             }
         }
-        addButton(jPanel, "=", 5, 3, Type.EQUAL);
-        addButton(jPanel, "0", 2, 6, Type.INPUT);
-        addButton(jPanel, "-", 5, 5, Type.OPERATION);
-        addButton(jPanel, "+", 5, 6, Type.OPERATION);
-        addButton(jPanel, ".", 4, 6, Type.INPUT);
+
         addButton(jPanel, "C", 2, 2, Type.CLEAR);
+        addButton(jPanel, "0", 2, 6, Type.INPUT);
         addButton(jPanel, "/", 3, 2, Type.OPERATION);
         addButton(jPanel, "*", 4, 2, Type.OPERATION);
+        addButton(jPanel, ".", 4, 6, Type.INPUT);
         addButton(jPanel, "±", 5, 2, Type.NEGATIVE);
+        addButton(jPanel, "=", 5, 3, Type.EQUAL);
+        addButton(jPanel, "-", 5, 5, Type.OPERATION);
+        addButton(jPanel, "+", 5, 6, Type.OPERATION);
+
     }
+
 
     private void addButton(Container jPanel, String text, int x, int y, Type type) {
         JButton subtract = new CalcButton(text, type);
-        jPanel.add(subtract, getLocationButton(x, y, text));
+        jPanel.add(subtract, getLocationElement(x, y, text));
         subtract.addActionListener(new CalcListener(output, output2));
     }
 
-
-    private GridBagConstraints getLocationTextField(int gr, int ipy, int gy) {
+    private GridBagConstraints getLocationElement(int gx, int gy, String text) {
         GridBagConstraints result = new GridBagConstraints();
-        result.gridy = gy;
-        result.gridwidth = gr;
-        result.ipady = ipy;
-        result.fill = GridBagConstraints.HORIZONTAL;
+        getLocationElement(result, gx, gy, text);
         return result;
     }
 
-
-    private GridBagConstraints getLocationButton(int gx, int gy, String text) {
-        GridBagConstraints result = new GridBagConstraints();
-        getLocationButton(result, gx, gy, text);
-        return result;
+    private void getLocationElement(GridBagConstraints result, int gx, int gy, String text) {
+        result.gridx = gx;
+        result.gridy = gy;
+        result.ipady = 20;
+        result.ipadx = 20;
+        buttonSize(result, text);
+        result.fill = GridBagConstraints.BOTH;
     }
 
     private void buttonSize(GridBagConstraints result, String text) {
@@ -78,19 +78,12 @@ public class WindiowCM {
             result.gridheight = 2;
         } else if (text.equals("0")) {
             result.gridwidth = 2;
+        } else if (text.equals("Enter digits")) {
+            result.gridwidth = 7;
         } else {
             result.gridwidth = 1;
         }
 
-    }
-
-    private void getLocationButton(GridBagConstraints result, int gx, int gy, String text) {
-        result.gridx = gx;
-        result.gridy = gy;
-        result.ipady = 20;
-        result.ipadx = 20;
-        buttonSize(result, text);
-        result.fill = GridBagConstraints.BOTH;
     }
 
     public void show() {

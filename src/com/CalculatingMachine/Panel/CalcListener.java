@@ -19,6 +19,9 @@ public class CalcListener implements ActionListener {
         //
         switch (button.TYPE) {
             case INPUT:
+                if ("Enter digits".equals(output.getText())){
+                    output.setText("");
+                }
                 output.setText((output.getText() + button.getText()));
                 break;
             case OPERATION:
@@ -34,12 +37,18 @@ public class CalcListener implements ActionListener {
                 output.setText("");
                 break;
             case NEGATIVE:
-                if ('-' == output.getText().charAt(0)) {
-                    output.setText(output.getText().substring(1));
-                } else {
-                    output.setText("-" + output.getText());
+                if ("Enter digits".equals(output.getText())){
+                    output.setText("");
+                }
+                if (!"".equals(output.getText())){
+                    if ('-' == output.getText().charAt(0)) {
+                        output.setText(output.getText().substring(1));
+                    } else {
+                        output.setText("-" + output.getText());
+                    }
                 }
                 break;
+
         }
 
     }

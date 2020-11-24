@@ -1,5 +1,7 @@
 package com.CalculatingMachine.Panel;
 
+import com.CalculatingMachine.CalculatingMachine;
+
 import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +14,7 @@ public class CalcListener implements ActionListener {
     public CalcListener(JTextField output, JTextField output2) {
         this.output = output;
         this.output2 = output2;
+
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -29,8 +32,11 @@ public class CalcListener implements ActionListener {
                 output.setText("");
                 break;
             case EQUAL:
-                computation(output2.getText());
-                //output.setText("FUCK");
+                //output2.setText(output2.getText() + output.getText());
+
+                output2.setText(computation((output2.getText()+output.getText())));
+                output.setText(computation((output2.getText()+output.getText())));
+                //
                 break;
             case CLEAR:
                 output2.setText("");
@@ -51,9 +57,23 @@ public class CalcListener implements ActionListener {
 
         }
 
+    }//output.setText(task);
+    private String computation(String task){
+        if('-' == task.charAt(0)){
+            if(task.substring(1).contains("-")){
+                return String.valueOf(Double.parseDouble(("-"+task.substring(1,task.substring(1).indexOf('-')+1))) - Integer.parseInt(task.substring(task.substring(1).indexOf('-')+2)));
+            }
+        }else if(task.contains("-")){
+            return String.valueOf(Double.parseDouble(task.substring(0,task.indexOf('-'))) - Integer.parseInt(task.substring(task.indexOf('-') + 1)));
+        }else if (task.contains("+")) {
+            return String.valueOf(Double.parseDouble(task.substring(0,task.indexOf('+'))) + Integer.parseInt(task.substring(task.indexOf('+') + 1)));
+        }else if (task.contains("/")){
+            return String.valueOf(Double.parseDouble(task.substring(0,task.indexOf('/'))) / Integer.parseInt(task.substring(task.indexOf('/') + 1)));
+        }else if (task.contains("*")){
+            return String.valueOf(Double.parseDouble(task.substring(0,task.indexOf('*'))) * Integer.parseInt(task.substring(task.indexOf('*') + 1)));
+        }
+        return task;
     }
-    private void computation(String task){
 
-    }
 }
 

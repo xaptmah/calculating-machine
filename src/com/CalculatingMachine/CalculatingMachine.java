@@ -2,7 +2,7 @@ package com.CalculatingMachine;
 
 public class CalculatingMachine {
 
-
+/*
     public CalculatingMachine(String task){
         computation(task);
     }
@@ -24,5 +24,5 @@ public class CalculatingMachine {
             System.out.println(Integer.parseInt(task.substring(0,task.indexOf('*'))) * Integer.parseInt(task.substring(task.indexOf('*') + 1)));
         }
 
-    }
+    }*/
 }

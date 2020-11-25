@@ -24,6 +24,7 @@ public class WindiowCM {
         jPanel.setLayout(gridBagLayout);
         jPanel.revalidate();
         output2.setEditable(false);
+        output.setEditable(false);
         jPanel.add(output, new GridBag(0, 1, output.getText()));
         jPanel.add(output2, new GridBag(0, 0, output.getText()));
         getButtonListener(jPanel);

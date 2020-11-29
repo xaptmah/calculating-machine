@@ -26,13 +26,13 @@ public class CalcListener implements ActionListener {
                     inputField.setText(inputField.getText() + button.getText());
                 } else if ((inputField.getText()).contains(".") && (button.getText()).contains(".")) {
                     inputField.setText(inputField.getText());
-                }else {
+                } else {
                     inputField.setText(inputField.getText() + button.getText());
                 }
                 break;
             case OPERATION:
-                if (inputField.getText().equals("")) {
-                    operationsHistoryFeald.setText(inputField.getText() + inputField.getText());
+                if (operationsHistoryFeald.getText().equals("")) {
+                    operationsHistoryFeald.setText(inputField.getText() + button.getText());
                     inputField.setText("");
                 }
 
@@ -40,8 +40,9 @@ public class CalcListener implements ActionListener {
             case EQUAL:
 
                 operationsHistoryFeald.setText(operationsHistoryFeald.getText() + inputField.getText());
+                System.out.println(operationsHistoryFeald.getText());
 
-                operationsHistoryFeald.setText(operationsHistoryFeald.getText() +"="+ calculate(operationsHistoryFeald.getText()));
+                operationsHistoryFeald.setText(operationsHistoryFeald.getText() + "=" + calculate(operationsHistoryFeald.getText()));
 
                 break;
             case CLEAR:
@@ -64,22 +65,24 @@ public class CalcListener implements ActionListener {
         }
 
     }//output.setText(task);
+    String operation ="";
 
     private String calculate(String task) {
 
-            String operation = define(task);
+        operation = define(task);
+
+        System.out.println(operation);
 
 
-        String primaryNumber ="";
-        String secondaryNumber= "";
-
+        String primaryNumber = "";
+        String secondaryNumber = "";
 
 
         Double primaryNumbe = Double.parseDouble(primaryNumber);
         //System.out.println("__"+primaryNumbe);
         Double secondaryNumbe = Double.parseDouble(secondaryNumber);
         //System.out.println("__"+secondaryNumbe);
-        switch (operation){
+        switch (operation) {
             case "-":
                 return String.valueOf(primaryNumbe - secondaryNumbe);
             case "+":
@@ -92,11 +95,22 @@ public class CalcListener implements ActionListener {
 
         return "2";
     }
-    private String define(String expressionSign){
-        if ("-".equals(expressionSign.charAt(0))){
 
+    private String define(String expressionSign) {
+        if ('-' == expressionSign.charAt(0)) {
+            expressionSign = expressionSign.substring(1);
         }
 
+        if ('-' == expressionSign.charAt(expressionSign.indexOf("-"))) {
+            return "-";
+        } else if ('+' == expressionSign.charAt(expressionSign.indexOf("+"))){
+            return "+";
+        }else if ('*' == expressionSign.charAt(expressionSign.indexOf("*"))){
+            return "*";
+        }else if ('/' == expressionSign.charAt(expressionSign.indexOf("/"))){
+            return "/";
+        }
+        return "xyz";
     }
 
 }

@@ -1,82 +1,62 @@
 package com.CalculatingMachine.Panel;
 
-import com.CalculatingMachine.CalculatingMachine;
-
 import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CalcListener implements ActionListener {
 
-    private final JTextField output;
-    private final JTextField output2;
+    private final JTextField inputField;
+    private final JTextField operationsHistoryFeald;
 
-    public CalcListener(JTextField output, JTextField output2) {
-        this.output = output;
-        this.output2 = output2;
+
+    public CalcListener(JTextField output, JTextField operationsHistory) {
+        this.inputField = output;
+        this.operationsHistoryFeald = operationsHistory;
 
     }
 
     public void actionPerformed(ActionEvent e) {
         CalcButton button = ((CalcButton) e.getSource());
-        //
+
         switch (button.TYPE) {
             case INPUT:
-                String dot = button.getText();
-                if ("Enter digits".equals(output.getText())){
-                    output.setText("");
-                }else if ((output.getText()).contains(".")&&(button.getText()).contains(".") ){
-                    output.setText(output.getText());
+                if ("Enter digits".equals(inputField.getText())) {
+                    inputField.setText("");
+                    inputField.setText(inputField.getText() + button.getText());
+                } else if ((inputField.getText()).contains(".") && (button.getText()).contains(".")) {
+                    inputField.setText(inputField.getText());
                 }else {
-                    output.setText(output.getText() + button.getText());
+                    inputField.setText(inputField.getText() + button.getText());
                 }
                 break;
             case OPERATION:
-                if (output2.getText().equals("")){
-                    output2.setText(output2.getText() + output.getText() + button.getText());
-                    output.setText("");
-
-                }else if((output2.getText()).contains("=")){
-                    output2.setText("");
-                    output2.setText(output.getText() + button.getText());
-                    output.setText("");
-                }else {
-                    output2.setText(output2.getText());
-                    //output.setText(String.valueOf((output2.getText()).compareTo("*")));
+                if (inputField.getText().equals("")) {
+                    operationsHistoryFeald.setText(inputField.getText() + inputField.getText());
+                    inputField.setText("");
                 }
-
-
 
                 break;
             case EQUAL:
-                //output2.setText(output2.getText() + output.getText());
-                if(!(output2.getText()).contains("=")){
-                    output2.setText(output2.getText()+output.getText());
-                    output.setText(computation(output2.getText()));
 
-                    output2.setText(output2.getText()+ "=" + computation(output2.getText()));
+                operationsHistoryFeald.setText(operationsHistoryFeald.getText() + inputField.getText());
 
+                operationsHistoryFeald.setText(operationsHistoryFeald.getText() +"="+ calculate(operationsHistoryFeald.getText()));
 
-                }else {
-                    output2.setText(output2.getText());
-                }
-
-
-                //
                 break;
             case CLEAR:
-                output2.setText("");
-                output.setText("");
+                operationsHistoryFeald.setText("");
+                inputField.setText("");
                 break;
             case NEGATIVE:
-                if ("Enter digits".equals(output.getText())){
-                    output.setText("");
+                if ("Enter digits".equals(inputField.getText())) {
+                    inputField.setText("");
                 }
-                if (!"".equals(output.getText())){
-                    if ('-' == output.getText().charAt(0)) {
-                        output.setText(output.getText().substring(1));
+                if (!"".equals(inputField.getText())) {
+                    if ('-' == inputField.getText().charAt(0)) {
+                        inputField.setText(inputField.getText().substring(1));
                     } else {
-                        output.setText("-" + output.getText());
+                        inputField.setText("-" + inputField.getText());
                     }
                 }
                 break;
@@ -84,21 +64,39 @@ public class CalcListener implements ActionListener {
         }
 
     }//output.setText(task);
-    private String computation(String task){
-        if('-' == task.charAt(0)){
-            if(task.substring(1).contains("-")){
-                return String.valueOf(Double.parseDouble(("-"+task.substring(1,task.substring(1).indexOf('-')+1))) - Double.parseDouble(task.substring(task.substring(1).indexOf('-')+2)));
-            }
-        }else if(task.contains("-")){
-            return String.valueOf(Double.parseDouble(task.substring(0,task.indexOf('-'))) - Double.parseDouble(task.substring(task.indexOf('-') + 1)));
-        }else if (task.contains("+")) {
-            return String.valueOf(Double.parseDouble(task.substring(0,task.indexOf('+'))) + Double.parseDouble(task.substring(task.indexOf('+') + 1)));
-        }else if (task.contains("/")){
-            return String.valueOf(Double.parseDouble(task.substring(0,task.indexOf('/'))) / Double.parseDouble(task.substring(task.indexOf('/') + 1)));
-        }else if (task.contains("*")){
-            return String.valueOf(Double.parseDouble(task.substring(0,task.indexOf('*'))) * Double.parseDouble(task.substring(task.indexOf('*') + 1)));
+
+    private String calculate(String task) {
+
+            String operation = define(task);
+
+
+        String primaryNumber ="";
+        String secondaryNumber= "";
+
+
+
+        Double primaryNumbe = Double.parseDouble(primaryNumber);
+        //System.out.println("__"+primaryNumbe);
+        Double secondaryNumbe = Double.parseDouble(secondaryNumber);
+        //System.out.println("__"+secondaryNumbe);
+        switch (operation){
+            case "-":
+                return String.valueOf(primaryNumbe - secondaryNumbe);
+            case "+":
+                return String.valueOf(primaryNumbe + secondaryNumbe);
+            case "*":
+                return String.valueOf(primaryNumbe * secondaryNumbe);
+            case "/":
+                return String.valueOf(primaryNumbe / secondaryNumbe);
         }
-        return task;
+
+        return "2";
+    }
+    private String define(String expressionSign){
+        if ("-".equals(expressionSign.charAt(0))){
+
+        }
+
     }
 
 }

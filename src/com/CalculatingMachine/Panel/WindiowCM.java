@@ -12,8 +12,8 @@ import java.awt.GridBagLayout;
 public class WindiowCM {
 
 
-    private final JTextField output = new JTextField("Enter digits");
-    private final JTextField output2 = new JTextField();
+    private final JTextField inputField = new JTextField("Enter digits");
+    private final JTextField operationsHistoryFeald = new JTextField();
 
 
     public void addComponentsToWindiow(Container jPanel) {
@@ -23,10 +23,10 @@ public class WindiowCM {
         GridBagLayout gridBagLayout = new GridBagLayout();
         jPanel.setLayout(gridBagLayout);
         jPanel.revalidate();
-        output2.setEditable(false);
-        output.setEditable(false);
-        jPanel.add(output, new GridBag(0, 1, output.getText()));
-        jPanel.add(output2, new GridBag(0, 0, output.getText()));
+        operationsHistoryFeald.setEditable(false);
+        inputField.setEditable(false);
+        jPanel.add(inputField, new GridBag(0, 1, inputField.getText()));
+        jPanel.add(operationsHistoryFeald, new GridBag(0, 0, inputField.getText()));
         getButtonListener(jPanel);
 
     }
@@ -56,7 +56,7 @@ public class WindiowCM {
         JButton subtract = new CalcButton(text, type);
         GridBag gridBag = new GridBag(x, y, text);
         jPanel.add(subtract, gridBag);
-        subtract.addActionListener(new CalcListener(output, output2));
+        subtract.addActionListener(new CalcListener(inputField, operationsHistoryFeald));
     }
 
 

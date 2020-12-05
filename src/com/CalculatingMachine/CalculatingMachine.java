@@ -1,28 +1,38 @@
 package com.CalculatingMachine;
 
-public class CalculatingMachine {
+import com.CalculatingMachine.Panel.Operand;
+import com.CalculatingMachine.Panel.Operator;
 
-/*
-    public CalculatingMachine(String task){
-        computation(task);
+import java.util.ArrayList;
+import java.util.List;
+
+public class CalculatingMachine {
+    private List<Operand> operands;
+    private List<Operator> operators;
+
+    public CalculatingMachine(){
+        this.operands = new ArrayList<>();
+        this.operators = new ArrayList<>();
+    }
+    public Operand getOperand(int num){
+
+        return operands.isEmpty() ? null : operands.get(num);
+    }
+    public Operator getOperator(){
+        return  operators.isEmpty() ? null : operators.get(0);
+    }
+    public void setOperand(Operand operand) {
+        this.operands.add(operand);
     }
 
+    public void setOperator(Operator operators) {
+        this.operators.add(operators);
+    }
+    public Double reshenie(){
+        double i = getOperand(0).getOper();
 
+        double zi  = getOperand(1).getOper();
+        return i+zi;
+    }
 
-    private void computation(String task){
-        if('-' == task.charAt(0)){
-            if(task.substring(1).contains("-")){
-                System.out.println(Integer.parseInt(("-"+task.substring(1,task.substring(1).indexOf('-')+1))) - Integer.parseInt(task.substring(task.substring(1).indexOf('-')+2)));
-            }
-        }else if("-".contains(task)){
-            System.out.println(Integer.parseInt(task.substring(0,task.indexOf('-'))) - Integer.parseInt(task.substring(task.indexOf('-') + 1)));
-        }else if ("+".contains(task)) {
-            System.out.println(Integer.parseInt(task.substring(0,task.indexOf('+'))) + Integer.parseInt(task.substring(task.indexOf('+') + 1)));
-        }else if ("/".contains(task)){
-            System.out.println(Integer.parseInt(task.substring(0,task.indexOf('/'))) / Integer.parseInt(task.substring(task.indexOf('/') + 1)));
-        }else if ("*".contains(task)){
-            System.out.println(Integer.parseInt(task.substring(0,task.indexOf('*'))) * Integer.parseInt(task.substring(task.indexOf('*') + 1)));
-        }
-
-    }*/
 }

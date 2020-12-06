@@ -31,8 +31,12 @@ public class CalculatingMachine {
     public Double reshenie(){
         double i = getOperand(0).getOper();
 
-        double zi  = getOperand(1).getOper();
+        double zi  = getOperand(0).getOper();
         return i+zi;
+    }
+
+    public int xui4estvo(){
+        return operands.size();
     }
 
 }

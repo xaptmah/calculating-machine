@@ -25,44 +25,27 @@ public class CalcListener implements ActionListener {
         CalcButton button = ((CalcButton) e.getSource());
         switch (button.TYPE) {
             case INPUT:
-
-                if ("Enter digits".equals(inputField.getText())){
-                    inputField.setText("");
-                    inputField.setText(inputField.getText() + button.getText());
-
-
-                }else if (inputField.getText().contains(".") && button.getText().contains(".") ){
-
+                if (areThereOperands(inputField)){
+                    clearField(inputField);
+                    setSymbol(inputField,button.getText());
+                }else if (hasDot(button)){
+                    deleteDot();
                 }else {
-                    inputField.setText(inputField.getText() + button.getText());
-
+                    setSymbol(inputField,button.getText());
                 }
                 break;
             case OPERATION:
-                if (operationsHistoryField.getText().equals("")){
-                    //operands.add(inputField.getText());
-                    //System.out.println("позиция1 "+operands.get(0));
-                    //System.out.println("заполнение списка "+operands.size());
-                    operationsHistoryField.setText(operationsHistoryField.getText() + inputField.getText() + button.getText());
-                    inputField.setText("");
-                }else if((operationsHistoryField.getText()).contains("=")){
-                    operationsHistoryField.setText("");
-                    operationsHistoryField.setText(inputField.getText() + button.getText());
-                    inputField.setText("");
-                }else {
-                    operationsHistoryField.setText(operationsHistoryField.getText());
-                    //output.setText(String.valueOf((output2.getText()).compareTo("*")));
+                if(!checkFilling(inputField) && !areThereOperands(inputField) && checkFilling(operationsHistoryField)){
+                    saveOperand();
+                    saveOperator(button);
+                    moveStringTo(operationsHistoryField,button);
+                    clearField(inputField);
                 }
-
-
-
                 break;
             case EQUAL:
-                //output2.setText(output2.getText() + output.getText());
                 if(!(operationsHistoryField.getText()).contains("=")){
-
-                }else {
-                    operationsHistoryField.setText(operationsHistoryField.getText());
+                    saveOperand();
+                    moveStringTo(operationsHistoryField,button);
                 }
 
 
@@ -70,12 +53,12 @@ public class CalcListener implements ActionListener {
                 break;
             case CLEAR:
                 operands.clear();
-                operationsHistoryField.setText("");
-                inputField.setText("");
+                clearField(operationsHistoryField);
+                clearField(inputField);
 
                 break;
             case NEGATIVE:
-                if ("Enter digits".equals(inputField.getText())){
+                if (areThereOperands(inputField)){
                     inputField.setText("");
                 }
                 if (!"".equals(inputField.getText())){
@@ -89,14 +72,54 @@ public class CalcListener implements ActionListener {
 
         }
 
-    }//output.setText(task);/**/
+    }
+
+    private void moveStringTo(JTextField operationsHistoryField,CalcButton button) {
+        operationsHistoryField.setText(operationsHistoryField.getText() + inputField.getText() + button.getText());
+    }
 
 
+    private void saveOperator(CalcButton button) {
+        operators.add(button.getText());
+    }
 
 
+    private void saveOperand() {
+        operands.add(inputField.getText());
+    }
 
+    private boolean checkFilling(JTextField field) {
 
+        return "".equals(field.getText());
+    }
 
+    private void deleteDot() {
+        if(dotEndElement()){
+            inputField.setText(inputField.getText().substring(0,inputField.getText().length()-1));
+        }
+    }
+
+    private boolean dotEndElement() {
+        return '.' == (inputField.getText().charAt(inputField.getText().length() - 1));
+    }
+
+    private boolean hasDot(CalcButton button) {
+
+        return inputField.getText().contains(".") && button.getText().contains(".");
+    }
+
+    private boolean areThereOperands(JTextField field) {
+        return "Enter digits".equals(field.getText());
+    }
+
+    private void clearField(JTextField inputField) {
+        inputField.setText("");
+    }
+
+    private void setSymbol(JTextField field, String button) {
+
+        field.setText(field.getText() + button);
+    }
 
 
 }

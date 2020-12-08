@@ -17,9 +17,11 @@ public class WindiowCM {
     private final JTextField inputField = new JTextField("Enter digits");
     private final JTextField operationsHistoryFeald = new JTextField();
     private List<String> operands;
+    private List<String> operators;
 
     public void addComponentsToWindiow(Container jPanel) {
         this.operands = new ArrayList<>();
+        this.operators = new ArrayList<>();
 
 
         jPanel.setBounds(0, 0, 240, 340);
@@ -59,7 +61,7 @@ public class WindiowCM {
     private void addButton(Container jPanel, String text, int x, int y, Type type) {
         JButton subtract = new CalcButton(text, type);
         jPanel.add(subtract, new GridBag(x, y, text));
-        subtract.addActionListener(new CalcListener(inputField, operationsHistoryFeald,operands));
+        subtract.addActionListener(new CalcListener(inputField, operationsHistoryFeald,operands,operators));
     }
 
 

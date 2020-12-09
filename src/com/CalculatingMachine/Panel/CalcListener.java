@@ -12,7 +12,7 @@ public class CalcListener implements ActionListener {
     private final List<String> operands;
     private final List<String> operators;
 
-    public CalcListener(JTextField inputField, JTextField operationsHistoryField, List<String> operands,List<String> operators) {
+    public CalcListener(JTextField inputField, JTextField operationsHistoryField, List<String> operands, List<String> operators) {
         this.inputField = inputField;
         this.operationsHistoryField = operationsHistoryField;
         this.operands = operands;
@@ -20,52 +20,47 @@ public class CalcListener implements ActionListener {
     }
 
 
-
     public void actionPerformed(ActionEvent e) {
         CalcButton button = ((CalcButton) e.getSource());
         switch (button.TYPE) {
             case INPUT:
-                if (areThereOperands(inputField)){
+                if (isThereInside(inputField, "Enter digits")) {
                     clearField(inputField);
-                    setSymbol(inputField,button.getText());
-                }else if (hasDot(button)){
+                    setSymbol(inputField, button.getText());
+                } else if (hasDot(button)) {
                     deleteDot();
-                }else {
-                    setSymbol(inputField,button.getText());
+                } else {
+                    setSymbol(inputField, button.getText());
                 }
                 break;
             case OPERATION:
-                if(!checkFilling(inputField) && !areThereOperands(inputField) && checkFilling(operationsHistoryField)){
+                if (!isThereInside(inputField, "") && !isThereOperands(inputField) && isThereInside(operationsHistoryField, "")) {
                     saveOperand();
                     saveOperator(button);
-                    moveStringTo(operationsHistoryField,button);
+                    moveStringTo(operationsHistoryField, button);
                     clearField(inputField);
                 }
                 break;
             case EQUAL:
-                if(!(operationsHistoryField.getText()).contains("=")){
+                if (!isThereInside(operationsHistoryField, "") && !isPositionElement(operationsHistoryField, '=', lastPosition(operationsHistoryField))) {
                     saveOperand();
-                    moveStringTo(operationsHistoryField,button);
+                    moveStringTo(operationsHistoryField, button);
                 }
-
-
-                //
                 break;
             case CLEAR:
                 operands.clear();
                 clearField(operationsHistoryField);
                 clearField(inputField);
-
                 break;
             case NEGATIVE:
-                if (areThereOperands(inputField)){
-                    inputField.setText("");
+                if (isThereInside(inputField, "Enter digits")) {
+                    clearField(inputField);
                 }
-                if (!"".equals(inputField.getText())){
-                    if ('-' == inputField.getText().charAt(0)) {
-                        inputField.setText(inputField.getText().substring(1));
+                if (!isThereInside(inputField, "")) {
+                    if (isPositionElement(inputField, '-', 0)) {
+                        deleteFirstElement(inputField);
                     } else {
-                        inputField.setText("-" + inputField.getText());
+                        setSignNegative(inputField);
                     }
                 }
                 break;
@@ -74,7 +69,19 @@ public class CalcListener implements ActionListener {
 
     }
 
-    private void moveStringTo(JTextField operationsHistoryField,CalcButton button) {
+    private void setSignNegative(JTextField inputField) {
+        inputField.setText("-" + inputField.getText());
+    }
+
+    private void deleteFirstElement(JTextField inputField) {
+        inputField.setText(inputField.getText().substring(1));
+    }
+
+    private boolean isPositionElement(JTextField field, char element, int position) {
+        return element == field.getText().charAt(position);
+    }
+
+    private void moveStringTo(JTextField operationsHistoryField, CalcButton button) {
         operationsHistoryField.setText(operationsHistoryField.getText() + inputField.getText() + button.getText());
     }
 
@@ -88,19 +95,23 @@ public class CalcListener implements ActionListener {
         operands.add(inputField.getText());
     }
 
-    private boolean checkFilling(JTextField field) {
+    private boolean isThereInside(JTextField field, String element) {
 
-        return "".equals(field.getText());
+        return element.equals(field.getText());
     }
 
     private void deleteDot() {
-        if(dotEndElement()){
-            inputField.setText(inputField.getText().substring(0,inputField.getText().length()-1));
+        if (dotEndElement()) {
+            inputField.setText(inputField.getText().substring(0, lastPosition(inputField)));
         }
     }
 
     private boolean dotEndElement() {
-        return '.' == (inputField.getText().charAt(inputField.getText().length() - 1));
+        return isPositionElement(inputField, '.', lastPosition(inputField));
+    }
+
+    private int lastPosition(JTextField field) {
+        return field.getText().length() - 1;
     }
 
     private boolean hasDot(CalcButton button) {
@@ -108,7 +119,7 @@ public class CalcListener implements ActionListener {
         return inputField.getText().contains(".") && button.getText().contains(".");
     }
 
-    private boolean areThereOperands(JTextField field) {
+    private boolean isThereOperands(JTextField field) {
         return "Enter digits".equals(field.getText());
     }
 

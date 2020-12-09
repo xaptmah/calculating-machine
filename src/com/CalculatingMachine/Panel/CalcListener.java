@@ -42,13 +42,16 @@ public class CalcListener implements ActionListener {
                 }
                 break;
             case EQUAL:
-                if (!isThereInside(operationsHistoryField, "") && !isPositionElement(operationsHistoryField, '=', lastPosition(operationsHistoryField))) {
+                if (!isThereInside(operationsHistoryField, "") && !isThereInside(inputField,"") && !isElementPosition(operationsHistoryField, '=', lastPosition(operationsHistoryField))) {
                     saveOperand();
                     moveStringTo(operationsHistoryField, button);
+                    outputTheResult(calculate());
+
                 }
                 break;
             case CLEAR:
                 operands.clear();
+                operators.clear();
                 clearField(operationsHistoryField);
                 clearField(inputField);
                 break;
@@ -57,7 +60,7 @@ public class CalcListener implements ActionListener {
                     clearField(inputField);
                 }
                 if (!isThereInside(inputField, "")) {
-                    if (isPositionElement(inputField, '-', 0)) {
+                    if (isElementPosition(inputField, '-', 0)) {
                         deleteFirstElement(inputField);
                     } else {
                         setSignNegative(inputField);
@@ -69,6 +72,38 @@ public class CalcListener implements ActionListener {
 
     }
 
+    private String calculate() {
+
+        switch (getOperator()){
+            case "+":
+                return String.valueOf(getOperand(0)+getOperand(1));
+
+            case "-":
+                return String.valueOf(getOperand(0)-getOperand(1));
+
+            case "*":
+                return String.valueOf(getOperand(0)*getOperand(1));
+
+            case "/":
+                return String.valueOf(getOperand(0)/getOperand(1));
+
+        }
+        return "";
+    }
+
+    private String getOperator() {
+        return operators.get(0);
+    }
+
+    private double getOperand(int index) {
+        return Double.parseDouble(operands.get(index));
+    }
+
+    private void outputTheResult(String result) {
+        inputField.setText(result);
+        operationsHistoryField.setText(operationsHistoryField.getText() + inputField.getText());
+    }
+
     private void setSignNegative(JTextField inputField) {
         inputField.setText("-" + inputField.getText());
     }
@@ -77,7 +112,7 @@ public class CalcListener implements ActionListener {
         inputField.setText(inputField.getText().substring(1));
     }
 
-    private boolean isPositionElement(JTextField field, char element, int position) {
+    private boolean isElementPosition(JTextField field, char element, int position) {
         return element == field.getText().charAt(position);
     }
 
@@ -107,7 +142,7 @@ public class CalcListener implements ActionListener {
     }
 
     private boolean dotEndElement() {
-        return isPositionElement(inputField, '.', lastPosition(inputField));
+        return isElementPosition(inputField, '.', lastPosition(inputField));
     }
 
     private int lastPosition(JTextField field) {

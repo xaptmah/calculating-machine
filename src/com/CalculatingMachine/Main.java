@@ -1,6 +1,6 @@
 package com.CalculatingMachine;
 
-import com.CalculatingMachine.Panel.WindiowCM;
+import com.CalculatingMachine.Panel.WindowCM;
 
 import javax.swing.SwingUtilities;
 
@@ -9,7 +9,7 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                WindiowCM windiowCM = new WindiowCM();
+                WindowCM windiowCM = new WindowCM();
                 windiowCM.show();
             }
         });

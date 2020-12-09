@@ -11,15 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class WindiowCM {
+public class WindowCM {
 
 
     private final JTextField inputField = new JTextField("Enter digits");
-    private final JTextField operationsHistoryFeald = new JTextField();
+    private final JTextField operationsHistoryField = new JTextField();
     private List<String> operands;
     private List<String> operators;
 
-    public void addComponentsToWindiow(Container jPanel) {
+    public void addComponentsToWindow(Container jPanel) {
         this.operands = new ArrayList<>();
         this.operators = new ArrayList<>();
 
@@ -28,10 +28,10 @@ public class WindiowCM {
         GridBagLayout gridBagLayout = new GridBagLayout();
         jPanel.setLayout(gridBagLayout);
         jPanel.revalidate();
-        operationsHistoryFeald.setEditable(false);
+        operationsHistoryField.setEditable(false);
         inputField.setEditable(false);
         jPanel.add(inputField, new GridBag(0, 1, inputField.getText()));
-        jPanel.add(operationsHistoryFeald, new GridBag(0, 0, inputField.getText()));
+        jPanel.add(operationsHistoryField, new GridBag(0, 0, inputField.getText()));
         getButtonListener(jPanel);
 
 
@@ -61,7 +61,7 @@ public class WindiowCM {
     private void addButton(Container jPanel, String text, int x, int y, Type type) {
         JButton subtract = new CalcButton(text, type);
         jPanel.add(subtract, new GridBag(x, y, text));
-        subtract.addActionListener(new CalcListener(inputField, operationsHistoryFeald,operands,operators));
+        subtract.addActionListener(new CalcListener(inputField, operationsHistoryField,operands,operators));
     }
 
 
@@ -69,7 +69,7 @@ public class WindiowCM {
         JFrame window = new JFrame("Calculating Machine");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLocationRelativeTo(null);
-        addComponentsToWindiow(window.getContentPane());
+        addComponentsToWindow(window.getContentPane());
         window.setVisible(true);
         window.pack();
         //window.setResizable(false);

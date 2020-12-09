@@ -9,8 +9,8 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                WindowCM windiowCM = new WindowCM();
-                windiowCM.show();
+                WindowCM windowCM = new WindowCM();
+                windowCM.show();
             }
         });
     }

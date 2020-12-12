@@ -42,7 +42,7 @@ public class CalcListener implements ActionListener {
                 }
                 break;
             case EQUAL:
-                if (!isThereInside(operationsHistoryField, "") && !isThereInside(inputField,"") && !isElementPosition(operationsHistoryField, '=', lastPosition(operationsHistoryField))) {
+                if (!isThereInside(operationsHistoryField, "") && !isThereInside(inputField,"") && !isContains(operationsHistoryField)) {
                     saveOperand();
                     moveStringTo(operationsHistoryField, button);
                     outputTheResult(calculate());
@@ -70,6 +70,10 @@ public class CalcListener implements ActionListener {
 
         }
 
+    }
+
+    private boolean isContains(JTextField operationsHistoryField) {
+        return operationsHistoryField.getText().contains("=");
     }
 
     private String calculate() {

@@ -3,20 +3,16 @@ package com.CalculatingMachine.Panel;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class CalcListener implements ActionListener {
 
     private final JTextField inputField;
     private final JTextField operationsHistoryField;
-    private final List<String> operands;
-    private final List<String> operators;
+    private CalcMemory calcMemory = new CalcMemory();
 
-    public CalcListener(JTextField inputField, JTextField operationsHistoryField, List<String> operands, List<String> operators) {
+    public CalcListener(JTextField inputField, JTextField operationsHistoryField) {
         this.inputField = inputField;
         this.operationsHistoryField = operationsHistoryField;
-        this.operands = operands;
-        this.operators = operators;
     }
 
 
@@ -29,7 +25,7 @@ public class CalcListener implements ActionListener {
                     setSymbol(inputField, button.getText());
                 } else if (hasDot(button)) {
                     deleteDot();
-                } else {
+                } else if( !isContains(operationsHistoryField,"=")){
                     setSymbol(inputField, button.getText());
                 }
                 break;
@@ -42,7 +38,7 @@ public class CalcListener implements ActionListener {
                 }
                 break;
             case EQUAL:
-                if (!isThereInside(operationsHistoryField, "") && !isThereInside(inputField,"") && !isContains(operationsHistoryField)) {
+                if (!isThereInside(operationsHistoryField, "") && !isThereInside(inputField,"") && !isContains(operationsHistoryField,"=")) {
                     saveOperand();
                     moveStringTo(operationsHistoryField, button);
                     outputTheResult(calculate());
@@ -50,8 +46,7 @@ public class CalcListener implements ActionListener {
                 }
                 break;
             case CLEAR:
-                operands.clear();
-                operators.clear();
+                calcMemory.clear();
                 clearField(operationsHistoryField);
                 clearField(inputField);
                 break;
@@ -59,7 +54,7 @@ public class CalcListener implements ActionListener {
                 if (isThereInside(inputField, "Enter digits")) {
                     clearField(inputField);
                 }
-                if (!isThereInside(inputField, "")) {
+                if (!isThereInside(inputField, "") && !isContains(operationsHistoryField,"=")) {
                     if (isElementPosition(inputField, '-', 0)) {
                         deleteFirstElement(inputField);
                     } else {
@@ -72,35 +67,32 @@ public class CalcListener implements ActionListener {
 
     }
 
-    private boolean isContains(JTextField operationsHistoryField) {
-        return operationsHistoryField.getText().contains("=");
+    private boolean isContains(JTextField operationsHistoryField,String element) {
+        return operationsHistoryField.getText().contains(element);
     }
 
     private String calculate() {
 
         switch (getOperator()){
             case "+":
-                return String.valueOf(getOperand(0)+getOperand(1));
+
+                return String.valueOf(calcMemory.getOperand(0)+ calcMemory.getOperand(1)) ;
 
             case "-":
-                return String.valueOf(getOperand(0)-getOperand(1));
+                return String.valueOf(calcMemory.getOperand(0)- calcMemory.getOperand(1)) ;
 
             case "*":
-                return String.valueOf(getOperand(0)*getOperand(1));
+                return String.valueOf(calcMemory.getOperand(0)* calcMemory.getOperand(1)) ;
 
             case "/":
-                return String.valueOf(getOperand(0)/getOperand(1));
+                return String.valueOf(calcMemory.getOperand(0)/ calcMemory.getOperand(1)) ;
 
         }
         return "";
     }
 
     private String getOperator() {
-        return operators.get(0);
-    }
-
-    private double getOperand(int index) {
-        return Double.parseDouble(operands.get(index));
+        return calcMemory.getOperator(0);
     }
 
     private void outputTheResult(String result) {
@@ -126,16 +118,15 @@ public class CalcListener implements ActionListener {
 
 
     private void saveOperator(CalcButton button) {
-        operators.add(button.getText());
+        calcMemory.setOperator(button.getText());
     }
 
 
     private void saveOperand() {
-        operands.add(inputField.getText());
+        calcMemory.setOperand(inputField.getText());
     }
 
     private boolean isThereInside(JTextField field, String element) {
-
         return element.equals(field.getText());
     }
 

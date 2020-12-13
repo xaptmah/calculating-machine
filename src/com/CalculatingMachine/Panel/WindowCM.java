@@ -61,7 +61,7 @@ public class WindowCM {
     private void addButton(Container jPanel, String text, int x, int y, Type type) {
         JButton subtract = new CalcButton(text, type);
         jPanel.add(subtract, new GridBag(x, y, text));
-        subtract.addActionListener(new CalcListener(inputField, operationsHistoryField,operands,operators));
+        subtract.addActionListener(new CalcListener(inputField, operationsHistoryField));
     }
 
 

@@ -45,7 +45,7 @@ public class CalcListener implements ActionListener {
             setSymbol(inputField, button.getText());
         } else if (hasDot(button)) {
             deleteDot();
-        } else if( !isContains(operationsHistoryField,"=")){
+        } else if (!isContains(operationsHistoryField, "=")) {
             setSymbol(inputField, button.getText());
         }
     }
@@ -60,7 +60,7 @@ public class CalcListener implements ActionListener {
     }
 
     private void outputCalculate(CalcButton button) {
-        if (!isThereInside(operationsHistoryField, "") && !isThereInside(inputField,"") && !isContains(operationsHistoryField,"=")) {
+        if (!isThereInside(operationsHistoryField, "") && !isThereInside(inputField, "") && !isContains(operationsHistoryField, "=")) {
             saveOperand();
             moveStringTo(operationsHistoryField, button);
             outputTheResult(calculate());
@@ -78,7 +78,7 @@ public class CalcListener implements ActionListener {
         if (isThereInside(inputField, "Enter digits")) {
             clearField(inputField);
         }
-        if (!isThereInside(inputField, "") && !isContains(operationsHistoryField,"=")) {
+        if (!isThereInside(inputField, "") && !isContains(operationsHistoryField, "=")) {
             if (isElementPosition(inputField, '-', 0)) {
                 deleteFirstElement(inputField);
             } else {
@@ -87,25 +87,25 @@ public class CalcListener implements ActionListener {
         }
     }
 
-    private boolean isContains(JTextField operationsHistoryField,String element) {
+    private boolean isContains(JTextField operationsHistoryField, String element) {
         return operationsHistoryField.getText().contains(element);
     }
 
     private String calculate() {
 
-        switch (getOperator()){
+        switch (getOperator()) {
             case "+":
 
-                return String.valueOf(calcMemory.getOperand(0)+ calcMemory.getOperand(1)) ;
+                return String.valueOf(calcMemory.getOperand(0) + calcMemory.getOperand(1));
 
             case "-":
-                return String.valueOf(calcMemory.getOperand(0)- calcMemory.getOperand(1)) ;
+                return String.valueOf(calcMemory.getOperand(0) - calcMemory.getOperand(1));
 
             case "*":
-                return String.valueOf(calcMemory.getOperand(0)* calcMemory.getOperand(1)) ;
+                return String.valueOf(calcMemory.getOperand(0) * calcMemory.getOperand(1));
 
             case "/":
-                return String.valueOf(calcMemory.getOperand(0)/ calcMemory.getOperand(1)) ;
+                return String.valueOf(calcMemory.getOperand(0) / calcMemory.getOperand(1));
 
         }
         return "";

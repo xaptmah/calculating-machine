@@ -65,6 +65,6 @@ public class WindowCM {
         addComponentsToWindow(window.getContentPane());
         window.setVisible(true);
         window.pack();
-        //window.setResizable(false);
+        window.setResizable(false);
     }
 }

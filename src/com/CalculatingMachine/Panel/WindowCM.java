@@ -2,13 +2,8 @@ package com.CalculatingMachine.Panel;
 
 import com.CalculatingMachine.Panel.CalcButton.Type;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JTextField;
-import java.awt.Container;
-import java.awt.GridBagLayout;
-import java.util.ArrayList;
-import java.util.List;
+import javax.swing.*;
+import java.awt.*;
 
 
 public class WindowCM {
@@ -16,12 +11,10 @@ public class WindowCM {
 
     private final JTextField inputField = new JTextField("Enter digits");
     private final JTextField operationsHistoryField = new JTextField();
-    private List<String> operands;
-    private List<String> operators;
+
 
     public void addComponentsToWindow(Container jPanel) {
-        this.operands = new ArrayList<>();
-        this.operators = new ArrayList<>();
+
 
 
         jPanel.setBounds(0, 0, 240, 340);

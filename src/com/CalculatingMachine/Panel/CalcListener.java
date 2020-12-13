@@ -8,7 +8,7 @@ public class CalcListener implements ActionListener {
 
     private final JTextField inputField;
     private final JTextField operationsHistoryField;
-    private CalcMemory calcMemory = new CalcMemory();
+    private final CalcMemory calcMemory = new CalcMemory();
 
     public CalcListener(JTextField inputField, JTextField operationsHistoryField) {
         this.inputField = inputField;
@@ -20,51 +20,71 @@ public class CalcListener implements ActionListener {
         CalcButton button = ((CalcButton) e.getSource());
         switch (button.TYPE) {
             case INPUT:
-                if (isThereInside(inputField, "Enter digits")) {
-                    clearField(inputField);
-                    setSymbol(inputField, button.getText());
-                } else if (hasDot(button)) {
-                    deleteDot();
-                } else if( !isContains(operationsHistoryField,"=")){
-                    setSymbol(inputField, button.getText());
-                }
+                enterNumbers(button);
                 break;
             case OPERATION:
-                if (!isThereInside(inputField, "") && !isThereOperands(inputField) && isThereInside(operationsHistoryField, "")) {
-                    saveOperand();
-                    saveOperator(button);
-                    moveStringTo(operationsHistoryField, button);
-                    clearField(inputField);
-                }
+                saveOperandAndDefineOperator(button);
                 break;
             case EQUAL:
-                if (!isThereInside(operationsHistoryField, "") && !isThereInside(inputField,"") && !isContains(operationsHistoryField,"=")) {
-                    saveOperand();
-                    moveStringTo(operationsHistoryField, button);
-                    outputTheResult(calculate());
-
-                }
+                outputCalculate(button);
                 break;
             case CLEAR:
-                calcMemory.clear();
-                clearField(operationsHistoryField);
-                clearField(inputField);
+                clear();
                 break;
             case NEGATIVE:
-                if (isThereInside(inputField, "Enter digits")) {
-                    clearField(inputField);
-                }
-                if (!isThereInside(inputField, "") && !isContains(operationsHistoryField,"=")) {
-                    if (isElementPosition(inputField, '-', 0)) {
-                        deleteFirstElement(inputField);
-                    } else {
-                        setSignNegative(inputField);
-                    }
-                }
+                installOrUninstall();
                 break;
 
         }
 
+    }
+
+    private void enterNumbers(CalcButton button) {
+        if (isThereInside(inputField, "Enter digits")) {
+            clearField(inputField);
+            setSymbol(inputField, button.getText());
+        } else if (hasDot(button)) {
+            deleteDot();
+        } else if( !isContains(operationsHistoryField,"=")){
+            setSymbol(inputField, button.getText());
+        }
+    }
+
+    private void saveOperandAndDefineOperator(CalcButton button) {
+        if (!isThereInside(inputField, "") && !isThereOperands(inputField) && isThereInside(operationsHistoryField, "")) {
+            saveOperand();
+            saveOperator(button);
+            moveStringTo(operationsHistoryField, button);
+            clearField(inputField);
+        }
+    }
+
+    private void outputCalculate(CalcButton button) {
+        if (!isThereInside(operationsHistoryField, "") && !isThereInside(inputField,"") && !isContains(operationsHistoryField,"=")) {
+            saveOperand();
+            moveStringTo(operationsHistoryField, button);
+            outputTheResult(calculate());
+
+        }
+    }
+
+    private void clear() {
+        calcMemory.clear();
+        clearField(operationsHistoryField);
+        clearField(inputField);
+    }
+
+    private void installOrUninstall() {
+        if (isThereInside(inputField, "Enter digits")) {
+            clearField(inputField);
+        }
+        if (!isThereInside(inputField, "") && !isContains(operationsHistoryField,"=")) {
+            if (isElementPosition(inputField, '-', 0)) {
+                deleteFirstElement(inputField);
+            } else {
+                setSignNegative(inputField);
+            }
+        }
     }
 
     private boolean isContains(JTextField operationsHistoryField,String element) {

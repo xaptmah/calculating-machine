@@ -1,3 +1,7 @@
+//This My first progect.
+//@ Karpalov Dmitriy.  karpalovdmitrij@gmail.com
+
+
 package com.CalculatingMachine;
 
 import com.CalculatingMachine.Panel.WindowCM;
